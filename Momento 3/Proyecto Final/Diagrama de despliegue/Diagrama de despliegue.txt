@@ -1,0 +1,81 @@
+@startuml
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+!include DEVICONS/react.puml
+!include DEVICONS/mongodb.puml
+
+' --- CONFIGURACIÓN DE ESTILO ---
+skinparam componentStyle rectangle
+skinparam component {
+    BackgroundColor #FFFFFF
+    BorderColor #000000
+    FontColor #000000
+}
+
+skinparam node {
+    BackgroundColor #E8E8E8
+    BorderColor #000000
+    FontColor #000000
+    Shadowing true
+}
+
+skinparam artifact {
+    BackgroundColor #FFFFFF
+    BorderColor #000000
+}
+
+' --- NODO CLIENTE ---
+node "<<device>>\n:UserClient" as client {
+    node "<<device>>\n:Browser" as browser {
+        artifact "<<artifact>>\nReact + Vite\nHTML5" as frontend <<HTML5>>
+    }
+}
+
+' --- NODO SERVIDOR WEB/APLICACIÓN ---
+node "<<device>>\n:Application Server" as appserver {
+    artifact "<<artifact>>\nSpring Boot\nBackend API" as backend <<SpringBoot>>
+    
+    component "Controller Layer" as controller
+    component "Service Layer" as service
+    component "Repository Layer" as repository
+    
+    backend -down-> controller
+    controller -down-> service
+    service -down-> repository
+}
+
+' --- NODO SERVIDOR DE BASE DE DATOS ---
+node "<<device>>\n:DB Server" as dbserver {
+    database "<<artifact>>\nMongoDB\nDatabase" as mongodb <<MongoDB>>
+}
+
+' --- RELACIONES ---
+frontend -down-> backend : "HTTPS:443\nREST API\n(Axios)"
+backend -right-> mongodb : "TCP:27017\nMongoDB Protocol"
+
+' --- NOTAS ADICIONALES ---
+note right of frontend
+  **Tecnologías Frontend:**
+  - React 18
+  - Vite (Build Tool)
+  - Axios (HTTP Client)
+  - React Router
+end note
+
+note left of backend
+  **Tecnologías Backend:**
+  - Spring Boot 3.x
+  - Spring Web
+  - Spring Data MongoDB
+  - Java 17+
+end note
+
+note bottom of mongodb
+  **Base de Datos:**
+  - MongoDB 6.x
+  - Collections:
+    * usuarios
+    * proyectos
+    * tareas
+    * notificaciones
+end note
+@enduml

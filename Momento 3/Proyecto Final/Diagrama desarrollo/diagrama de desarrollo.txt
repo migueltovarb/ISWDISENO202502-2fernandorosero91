@@ -1,0 +1,280 @@
+@startuml
+' --- CONFIGURACIÓN DE ESTILO ---
+skinparam packageStyle rectangle
+skinparam package {
+    BackgroundColor #ADD8E6
+    BorderColor #000000
+    FontColor #000000
+}
+
+skinparam class {
+    BackgroundColor #ADD8E6
+    BorderColor #000000
+    FontColor #000000
+}
+
+' --- CAPA MODEL (IZQUIERDA) ---
+package Model {
+    
+    class Usuario {
+        -nombre : String
+        -correo : String
+        -contraseña : String
+        -rol : RolUsuario
+        --
+        +Usuario()
+        +getNombre() : String
+        +setNombre(nombre : String) : void
+        +getCorreo() : String
+        +setCorreo(correo : String) : void
+        +getContraseña() : String
+        +setContraseña(contraseña : String) : void
+        +getRol() : RolUsuario
+        +setRol(rol : RolUsuario) : void
+        +cambiarContraseña(nuevaContraseña : String) : boolean
+        +toString() : String
+    }
+    
+    class Proyecto {
+        -nombre : String
+        -descripcion : String
+        -responsable : Usuario
+        -fechaCreacion : Date
+        -fechaFinalizacion : Date
+        -tareas : List<Tarea>
+        --
+        +Proyecto()
+        +getNombre() : String
+        +setNombre(nombre : String) : void
+        +getDescripcion() : String
+        +setDescripcion(descripcion : String) : void
+        +getResponsable() : Usuario
+        +setResponsable(responsable : Usuario) : void
+        +getFechaCreacion() : Date
+        +setFechaCreacion(fechaCreacion : Date) : void
+        +getFechaFinalizacion() : Date
+        +setFechaFinalizacion(fechaFinalizacion : Date) : void
+        +getTareas() : List<Tarea>
+        +setTareas(tareas : List<Tarea>) : void
+        +editarProyecto(nombre : String, descripcion : String, responsable : Usuario, fechaFinalizacion : Date) : void
+        +eliminarProyecto() : void
+        +toString() : String
+    }
+    
+    class Tarea {
+        -titulo : String
+        -descripcion : String
+        -responsable : Usuario
+        -proyecto : Proyecto
+        -fechaInicio : Date
+        -fechaEntrega : Date
+        -estado : EstadoTarea
+        --
+        +Tarea()
+        +getTitulo() : String
+        +setTitulo(titulo : String) : void
+        +getDescripcion() : String
+        +setDescripcion(descripcion : String) : void
+        +getResponsable() : Usuario
+        +setResponsable(responsable : Usuario) : void
+        +getProyecto() : Proyecto
+        +setProyecto(proyecto : Proyecto) : void
+        +getFechaInicio() : Date
+        +setFechaInicio(fechaInicio : Date) : void
+        +getFechaEntrega() : Date
+        +setFechaEntrega(fechaEntrega : Date) : void
+        +getEstado() : EstadoTarea
+        +setEstado(estado : EstadoTarea) : void
+        +cambiarUsuario(usuario : Usuario) : void
+        +editarTarea(titulo : String, descripcion : String, fechaEntrega : Date, estado : EstadoTarea) : void
+        +eliminarTarea() : void
+        +estaRetrasada() : boolean
+        +diasRestantes() : int
+        +toString() : String
+    }
+    
+    class Notificacion {
+        -mensaje : String
+        -destinatario : Usuario
+        -fechaEnvio : Date
+        -tipo : TipoNotificacion
+        --
+        +Notificacion()
+        +getMensaje() : String
+        +setMensaje(mensaje : String) : void
+        +getDestinatario() : Usuario
+        +setDestinatario(destinatario : Usuario) : void
+        +getFechaEnvio() : Date
+        +setFechaEnvio(fechaEnvio : Date) : void
+        +getTipo() : TipoNotificacion
+        +setTipo(tipo : TipoNotificacion) : void
+        +enviarNotificacion() : void
+        +toString() : String
+    }
+}
+
+' --- PAQUETES DEL LADO DERECHO ---
+
+' --- CAPA CONTROLLER (ARRIBA DERECHA) ---
+package Controller {
+    class ProyectoController {
+        -proyectoService : ProyectoService
+        --
+        +getProyectoService() : ProyectoService
+        +setProyectoService(proyectoService : ProyectoService) : void
+        +crearProyecto(proyecto : Proyecto) : void
+        +consultarProyectos() : List<Proyecto>
+        +eliminarProyecto(idProyecto : int) : void
+        +actualizarProyecto(proyecto : Proyecto, idProyecto : int) : void
+    }
+    
+    class TareaController {
+        -tareaService : TareaService
+        --
+        +getTareaService() : TareaService
+        +setTareaService(tareaService : TareaService) : void
+        +crearTarea(tarea : Tarea) : void
+        +consultarTareas() : List<Tarea>
+        +eliminarTarea(idTarea : int) : void
+        +actualizarTarea(tarea : Tarea, idTarea : int) : void
+        +asignarTareaUsuario(idTarea : int, idUsuario : int) : void
+    }
+    
+    class UsuarioController {
+        -usuarioService : UsuarioService
+        --
+        +getUsuarioService() : UsuarioService
+        +setUsuarioService(usuarioService : UsuarioService) : void
+        +crearUsuario(usuario : Usuario) : void
+        +consultarUsuarios() : List<Usuario>
+        +eliminarUsuario(idUsuario : int) : void
+        +actualizarUsuario(usuario : Usuario, idUsuario : int) : void
+        +autenticarUsuario(correo : String, contraseña : String) : Usuario
+    }
+    
+    class NotificacionController {
+        -notificacionService : NotificacionService
+        --
+        +getNotificacionService() : NotificacionService
+        +setNotificacionService(notificacionService : NotificacionService) : void
+        +crearNotificacion(notificacion : Notificacion) : void
+        +consultarNotificaciones() : List<Notificacion>
+        +eliminarNotificacion(idNotificacion : int) : void
+        +enviarNotificacion(idNotificacion : int) : void
+    }
+}
+
+' --- CAPA SERVICES (CENTRO DERECHA) ---
+package Services {
+    class ProyectoService {
+        -proyectoRepository : ProyectoRepository
+        --
+        +ProyectoService()
+        +CrearProyecto(proyecto : Proyecto) : void
+        +ActualizarProyecto(proyecto : Proyecto, idProyecto : int) : void
+        +EliminarProyecto(idProyecto : int) : void
+        +consultarProyectos() : List<Proyecto>
+        +consultarProyectoPorId(idProyecto : int) : Proyecto
+        +getProyectoRepository() : ProyectoRepository
+        +setProyectoRepository(proyectoRepository : ProyectoRepository) : void
+    }
+    
+    class TareaService {
+        -tareaRepository : TareaRepository
+        --
+        +TareaService()
+        +CrearTarea(tarea : Tarea) : void
+        +ActualizarTarea(tarea : Tarea, idTarea : int) : void
+        +EliminarTarea(idTarea : int) : void
+        +consultarTareas() : List<Tarea>
+        +consultarTareaPorId(idTarea : int) : Tarea
+        +asignarTareaUsuario(idTarea : int, idUsuario : int) : void
+        +getTareaRepository() : TareaRepository
+        +setTareaRepository(tareaRepository : TareaRepository) : void
+    }
+    
+    class UsuarioService {
+        -usuarioRepository : UsuarioRepository
+        --
+        +UsuarioService()
+        +CrearUsuario(usuario : Usuario) : void
+        +ActualizarUsuario(usuario : Usuario, idUsuario : int) : void
+        +EliminarUsuario(idUsuario : int) : void
+        +consultarUsuarios() : List<Usuario>
+        +consultarUsuarioPorId(idUsuario : int) : Usuario
+        +autenticarUsuario(correo : String, contraseña : String) : Usuario
+        +getUsuarioRepository() : UsuarioRepository
+        +setUsuarioRepository(usuarioRepository : UsuarioRepository) : void
+    }
+    
+    class NotificacionService {
+        -notificacionRepository : NotificacionRepository
+        --
+        +NotificacionService()
+        +CrearNotificacion(notificacion : Notificacion) : void
+        +EliminarNotificacion(idNotificacion : int) : void
+        +consultarNotificaciones() : List<Notificacion>
+        +consultarNotificacionPorId(idNotificacion : int) : Notificacion
+        +enviarNotificacion(idNotificacion : int) : void
+        +getNotificacionRepository() : NotificacionRepository
+        +setNotificacionRepository(notificacionRepository : NotificacionRepository) : void
+    }
+}
+
+' --- CAPA DATA ACCESS (ABAJO DERECHA) ---
+package DataAccess {
+    class ProyectoRepository {
+        +ProyectoRepository()
+        +crear(proyecto : Proyecto) : void
+        +actualizar(proyecto : Proyecto, idProyecto : int) : void
+        +eliminar(idProyecto : int) : void
+        +buscarTodos() : List<Proyecto>
+        +buscarPorId(idProyecto : int) : Proyecto
+    }
+    
+    class TareaRepository {
+        +TareaRepository()
+        +crear(tarea : Tarea) : void
+        +actualizar(tarea : Tarea, idTarea : int) : void
+        +eliminar(idTarea : int) : void
+        +buscarTodos() : List<Tarea>
+        +buscarPorId(idTarea : int) : Tarea
+        +asignarUsuario(idTarea : int, idUsuario : int) : void
+    }
+    
+    class UsuarioRepository {
+        +UsuarioRepository()
+        +crear(usuario : Usuario) : void
+        +actualizar(usuario : Usuario, idUsuario : int) : void
+        +eliminar(idUsuario : int) : void
+        +buscarTodos() : List<Usuario>
+        +buscarPorId(idUsuario : int) : Usuario
+        +buscarPorCorreo(correo : String) : Usuario
+    }
+    
+    class NotificacionRepository {
+        +NotificacionRepository()
+        +crear(notificacion : Notificacion) : void
+        +eliminar(idNotificacion : int) : void
+        +buscarTodos() : List<Notificacion>
+        +buscarPorId(idNotificacion : int) : Notificacion
+        +buscarPorUsuario(idUsuario : int) : List<Notificacion>
+    }
+}
+
+' --- RELACIONES ENTRE CAPAS ---
+Model <.. Controller
+Controller ..> Services
+Services ..> DataAccess
+
+' --- RELACIONES ESPECÍFICAS ---
+ProyectoController --> ProyectoService
+TareaController --> TareaService
+UsuarioController --> UsuarioService
+NotificacionController --> NotificacionService
+
+ProyectoService --> ProyectoRepository
+TareaService --> TareaRepository
+UsuarioService --> UsuarioRepository
+NotificacionService --> NotificacionRepository
+@enduml

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Story Mapping - Sistema de Gestión de Tareas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #ffffff;
+            padding: 30px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: #5DADE2;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+        }
+        
+        .mapping-grid {
+            display: grid;
+            grid-template-columns: 150px repeat(5, 1fr);
+            gap: 15px;
+        }
+        
+        .row-header {
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            font-size: 14px;
+        }
+        
+        .user-icon {
+            width: 50px;
+            height: 50px;
+            background: #2C3E50;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        
+        .epic-card {
+            background: #F8B5B5;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 13px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .activity-card {
+            background: #7DD3C0;
+            padding: 15px 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 11px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .story-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .story-card {
+            background: #FFF176;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+            text-align: center;
+            font-weight: 500;
+            line-height: 1.3;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .story-id {
+            font-weight: bold;
+            color: #F57C00;
+            font-size: 9px;
+            margin-bottom: 3px;
+        }
+        
+        .vertical-line {
+            grid-column: span 6;
+            height: 2px;
+            background: #2C3E50;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        SISTEMA DE GESTIÓN DE TAREAS Y PROYECTOS
+    </div>
+    
+    <div class="mapping-grid">
+        <!-- FILA: Usuario -->
+        <div class="row-header">
+            <div class="user-icon">👤</div>
+            <span>Usuario</span>
+        </div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        
+        <!-- FILA: Épicas -->
+        <div class="row-header">Épicas</div>
+        <div class="epic-card">GESTIÓN DE USUARIOS</div>
+        <div class="epic-card">GESTIÓN DE PROYECTOS Y TAREAS</div>
+        <div class="epic-card">NOTIFICACIONES Y RECORDATORIOS</div>
+        <div class="epic-card">REPORTES DE PRODUCTIVIDAD</div>
+        <div class="epic-card">BÚSQUEDA Y FILTRADO</div>
+        
+        <!-- Línea divisoria -->
+        <div class="vertical-line"></div>
+        
+        <!-- FILA: Actividades -->
+        <div class="row-header">Actividades</div>
+        
+        <!-- Columna 1: Gestión de Usuarios -->
+        <div class="story-container">
+            <div class="activity-card">INGRESAR AL SISTEMA</div>
+            <div class="activity-card">ADMINISTRAR PERMISOS</div>
+        </div>
+        
+        <!-- Columna 2: Gestión de Proyectos y Tareas -->
+        <div class="story-container">
+            <div class="activity-card">ORGANIZAR PROYECTOS</div>
+            <div class="activity-card">TRABAJAR EN TAREAS</div>
+            <div class="activity-card">COLABORAR CON EL EQUIPO</div>
+        </div>
+        
+        <!-- Columna 3: Notificaciones -->
+        <div class="story-container">
+            <div class="activity-card">RECIBIR AVISOS</div>
+            <div class="activity-card">MONITOREAR PLAZOS</div>
+        </div>
+        
+        <!-- Columna 4: Reportes -->
+        <div class="story-container">
+            <div class="activity-card">ANALIZAR DESEMPEÑO</div>
+            <div class="activity-card">COMPARTIR RESULTADOS</div>
+        </div>
+        
+        <!-- Columna 5: Búsqueda -->
+        <div class="story-container">
+            <div class="activity-card">LOCALIZAR INFORMACIÓN</div>
+            <div class="activity-card">ORGANIZAR VISTA</div>
+        </div>
+        
+        <!-- Línea divisoria -->
+        <div class="vertical-line"></div>
+        
+        <!-- FILA: Historias de Usuario -->
+        <div class="row-header">Historias de usuario</div>
+        
+        <!-- Columna 1: Gestión de Usuarios -->
+        <div class="story-container">
+            <div class="story-card">
+                <div>
+                    <div class="story-id">HU-001</div>
+                    REGISTRO Y AUTENTICACIÓN DE USUARIOS
+                </div>
+            </div>
+            <div class="story-card">
+                <div>
+                    <div class="story-id">HU-002</div>
+                    ASIGNACIÓN DE ROLES
+                </div>
+            </div>
+        </div>
+        
+        <!-- Columna 2: Gestión de Proyectos y Tareas -->
+        <div class="story-container">
+            <div class="story-card">
+                <div>
+                    <div class="story-id">HU-003</div>
+                    CREACIÓN DE PROYECTOS
+                </div>
+            </div>
+            <div class="story-card">
+                <div>
+                    <div class="story-id">HU-004</div>
+                    GESTIÓN DE TAREAS
+                </div>
+            </div>
+            <div class="story-card">
+                <div>
+                    <div class="story-id">HU-005</div>
+                    ACTUALIZACIÓN DE ESTADO DE TAREAS
+                </div>
+            </div>
+            <div class="story-card">
+                <div>
+                    <div class="story-id">HU-006</div>
+                    ESTABLECER FECHAS DE ENTREGA
+                </div>
+            </div>
+            <div class="story-card">
+                <div>
+                    <div class="story-id">HU-007</div>
+                    ADJUNTAR COMENTARIOS Y ARCHIVOS
+                </div>
+            </div>
+        </div>
+        
+        <!-- Columna 3: Notificaciones -->
+        <div class="story-container">
+            <div class="story-card">
+                <div>
+                    <div class="story-id">HU-008</div>
+                    NOTIFICACIONES DE NUEVAS TAREAS
+                </div>
+            </div>
+            <div class="story-card">
+                <div>
+                    <div class="story-id">HU-009</div>
+                    ALERTAS DE VENCIMIENTO O RETRASO
+                </div>
+            </div>
+        </div>
+        
+        <!-- Columna 4: Reportes -->
+        <div class="story-container">
+            <div class="story-card">
+                <div>
+                    <div class="story-id">HU-010</div>
+                    REPORTES POR EMPLEADO
+                </div>
+            </div>
+            <div class="story-card">
+                <div>
+                    <div class="story-id">HU-011</div>
+                    REPORTES POR PROYECTO
+                </div>
+            </div>
+            <div class="story-card">
+                <div>
+                    <div class="story-id">HU-012</div>
+                    EXPORTACIÓN DE REPORTES
+                </div>
+            </div>
+        </div>
+        
+        <!-- Columna 5: Búsqueda -->
+        <div class="story-container">
+            <div class="story-card">
+                <div>
+                    <div class="story-id">HU-013</div>
+                    BÚSQUEDA DE TAREAS
+                </div>
+            </div>
+            <div class="story-card">
+                <div>
+                    <div class="story-id">HU-014</div>
+                    FILTRADO DE TAREAS
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

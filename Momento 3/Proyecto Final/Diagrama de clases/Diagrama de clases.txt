@@ -1,0 +1,139 @@
+@startuml
+' --- CONFIGURACIÓN DE ESTILO ---
+skinparam classAttributeIconSize 0
+skinparam class {
+    BackgroundColor #E6F0FF
+    BorderColor #004080
+    ArrowColor #003366
+    FontColor #002244
+}
+skinparam package {
+    BackgroundColor #F8FBFF
+    BorderColor #004080
+}
+
+' --- ENUMERACIONES ---
+enum RolUsuario {
+    EMPLEADO
+    GERENTEPROYECTO
+}
+
+enum EstadoTarea {
+    PENDIENTE
+    ENPROCESO
+    COMPLETADA
+    RETRASADA
+}
+
+enum TipoNotificacion {
+    NUEVATAREA
+    ALERTAVENCIMIENTO
+}
+
+' --- CLASES DEL MODELO ---
+class Usuario {
+    - nombre : String
+    - correo : String
+    - contraseña : String
+    - rol : RolUsuario
+    --
+    + Usuario()
+    + Usuario(nombre: String, correo: String, contraseña: String, rol: RolUsuario)
+    + getNombre(): String
+    + setNombre(nombre: String): void
+    + getCorreo(): String
+    + setCorreo(correo: String): void
+    + getContraseña(): String
+    + setContraseña(contraseña: String): void
+    + getRol(): RolUsuario
+    + setRol(rol: RolUsuario): void
+    + cambiarContraseña(nuevaContraseña: String): boolean
+    + toString(): String
+}
+
+class Proyecto {
+    - nombre : String
+    - descripcion : String
+    - responsable : Usuario
+    - fechaCreacion : Date
+    - fechaFinalizacion : Date
+    - tareas : List<Tarea>
+    --
+    + Proyecto()
+    + Proyecto(nombre: String, descripcion: String, responsable: Usuario, fechaCreacion: Date, fechaFinalizacion: Date, tareas: List<Tarea>)
+    + getNombre(): String
+    + setNombre(nombre: String): void
+    + getDescripcion(): String
+    + setDescripcion(descripcion: String): void
+    + getResponsable(): Usuario
+    + setResponsable(responsable: Usuario): void
+    + getFechaCreacion(): Date
+    + setFechaCreacion(fechaCreacion: Date): void
+    + getFechaFinalizacion(): Date
+    + setFechaFinalizacion(fechaFinalizacion: Date): void
+    + getTareas(): List<Tarea>
+    + setTareas(tareas: List<Tarea>): void
+    + editarProyecto(nombre: String, descripcion: String, responsable: Usuario, fechaFinalizacion: Date): void
+    + eliminarProyecto(): void
+    + toString(): String
+}
+
+class Tarea {
+    - titulo : String
+    - descripcion : String
+    - responsable : Usuario
+    - proyecto : Proyecto
+    - fechaInicio : Date
+    - fechaEntrega : Date
+    - estado : EstadoTarea
+    --
+    + Tarea()
+    + Tarea(titulo: String, descripcion: String, responsable: Usuario, proyecto: Proyecto, fechaInicio: Date, fechaEntrega: Date, estado: EstadoTarea)
+    + getTitulo(): String
+    + setTitulo(titulo: String): void
+    + getDescripcion(): String
+    + setDescripcion(descripcion: String): void
+    + getResponsable(): Usuario
+    + setResponsable(responsable: Usuario): void
+    + getProyecto(): Proyecto
+    + setProyecto(proyecto: Proyecto): void
+    + getFechaInicio(): Date
+    + setFechaInicio(fechaInicio: Date): void
+    + getFechaEntrega(): Date
+    + setFechaEntrega(fechaEntrega: Date): void
+    + getEstado(): EstadoTarea
+    + setEstado(estado: EstadoTarea): void
+    + cambiarUsuario(usuario: Usuario): void
+    + editarTarea(titulo: String, descripcion: String, fechaEntrega: Date, estado: EstadoTarea): void
+    + eliminarTarea(): void
+    + estaRetrasada(): boolean
+    + diasRestantes(): int
+    + toString(): String
+}
+
+class Notificacion {
+    - mensaje : String
+    - destinatario : Usuario
+    - fechaEnvio : Date
+    - tipo : TipoNotificacion
+    --
+    + Notificacion()
+    + Notificacion(mensaje: String, destinatario: Usuario, fechaEnvio: Date, tipoNotificacion: TipoNotificacion)
+    + getMensaje(): String
+    + setMensaje(mensaje: String): void
+    + getDestinatario(): Usuario
+    + setDestinatario(destinatario: Usuario): void
+    + getFechaEnvio(): Date
+    + setFechaEnvio(fechaEnvio: Date): void
+    + getTipo(): TipoNotificacion
+    + setTipo(tipo: TipoNotificacion): void
+    + enviarNotificacion(): void
+    + toString(): String
+}
+
+' --- RELACIONES ENTRE CLASES ---
+Usuario "1" -- "1..*" Proyecto : "responsable de"
+Proyecto "1" *-- "1..*" Tarea : "contiene"
+Usuario "1" -- "1..*" Tarea : "asignado a"
+Usuario "1" -- "1..*" Notificacion : "recibe"
+@enduml
