@@ -1,0 +1,292 @@
+{
+	"info": {
+		"_postman_id": "vehiculos-api-collection",
+		"name": "Vehiculos API",
+		"description": "Colección completa para probar el API REST de Vehículos con MongoDB",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Listar Todos los Vehículos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/vehiculos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vehiculos"
+					]
+				},
+				"description": "Obtiene la lista completa de todos los vehículos registrados"
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar Vehículo por ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/vehiculos/{{vehicleId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vehiculos",
+						"{{vehicleId}}"
+					]
+				},
+				"description": "Busca un vehículo específico por su ID. Reemplaza {{vehicleId}} con un ID válido."
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Vehículo - Toyota",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 201) {",
+							"    var jsonData = pm.response.json();",
+							"    pm.collectionVariables.set(\"vehicleId\", jsonData.id);",
+							"    pm.test(\"Vehículo creado exitosamente\", function () {",
+							"        pm.expect(jsonData.id).to.exist;",
+							"    });",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"marca\": \"Toyota\",\n    \"modelo\": \"Corolla\",\n    \"color\": \"Blanco\",\n    \"placa\": \"ABC-123\",\n    \"año\": 2023\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/vehiculos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vehiculos"
+					]
+				},
+				"description": "Crea un nuevo vehículo Toyota Corolla. El ID generado se guarda automáticamente en la variable {{vehicleId}}."
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Vehículo - Honda",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"marca\": \"Honda\",\n    \"modelo\": \"Civic\",\n    \"color\": \"Negro\",\n    \"placa\": \"XYZ-789\",\n    \"año\": 2024\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/vehiculos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vehiculos"
+					]
+				},
+				"description": "Crea un nuevo vehículo Honda Civic"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Vehículo - Chevrolet",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"marca\": \"Chevrolet\",\n    \"modelo\": \"Spark\",\n    \"color\": \"Rojo\",\n    \"placa\": \"DEF-456\",\n    \"año\": 2022\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/vehiculos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vehiculos"
+					]
+				},
+				"description": "Crea un nuevo vehículo Chevrolet Spark"
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar Vehículo",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"marca\": \"Toyota\",\n    \"modelo\": \"Corolla XLE\",\n    \"color\": \"Gris\",\n    \"placa\": \"ABC-123\",\n    \"año\": 2024\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/vehiculos/{{vehicleId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vehiculos",
+						"{{vehicleId}}"
+					]
+				},
+				"description": "Actualiza un vehículo existente. Usa la variable {{vehicleId}} o reemplázala con un ID válido."
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar Vehículo",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/vehiculos/{{vehicleId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vehiculos",
+						"{{vehicleId}}"
+					]
+				},
+				"description": "Elimina un vehículo por su ID. Usa la variable {{vehicleId}} o reemplázala con un ID válido."
+			},
+			"response": []
+		},
+		{
+			"name": "Validación - Crear sin Marca",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"modelo\": \"Test\",\n    \"color\": \"Azul\",\n    \"placa\": \"TEST-001\",\n    \"año\": 2023\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/vehiculos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vehiculos"
+					]
+				},
+				"description": "Prueba de validación: intenta crear un vehículo sin marca (debe fallar con error 400)"
+			},
+			"response": []
+		},
+		{
+			"name": "Validación - Año Inválido",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"marca\": \"Ford\",\n    \"modelo\": \"Fiesta\",\n    \"color\": \"Verde\",\n    \"placa\": \"TEST-002\",\n    \"año\": 1800\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/vehiculos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vehiculos"
+					]
+				},
+				"description": "Prueba de validación: intenta crear un vehículo con año menor a 1900 (debe fallar con error 400)"
+			},
+			"response": []
+		},
+		{
+			"name": "Error - Buscar ID Inexistente",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/vehiculos/000000000000000000000000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vehiculos",
+						"000000000000000000000000"
+					]
+				},
+				"description": "Prueba de error: busca un vehículo con ID inexistente (debe retornar 404)"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "vehicleId",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
